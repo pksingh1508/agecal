@@ -1,0 +1,26 @@
+{
+  "name": "Age Calculator - Calculate Your Exact Age Online",
+  "short_name": "Age Calculator",
+  "description": "Free online tool to calculate exact age from date of birth. Get years, months, and days instantly.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3B82F6",
+  "orientation": "portrait-primary",
+  "categories": ["utilities", "productivity", "tools"],
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ]
+}

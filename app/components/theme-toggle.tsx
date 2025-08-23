@@ -22,7 +22,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(currentTheme === "dark" ? "light" : "dark")}
-      className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 hover:shadow-xl transition-all duration-200 hover:scale-110 group"
+      className="hidden sm:block fixed top-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-600 hover:shadow-xl transition-all duration-200 hover:scale-110 group"
       aria-label="Toggle theme"
     >
       <svg
