@@ -24,7 +24,7 @@ export default function Home() {
 
         <section
           aria-label="About the age calculator"
-          className="rounded-3xl border border-slate-200 bg-white/90 p-10 text-left shadow-xl backdrop-blur dark:border-slate-800 dark:bg-slate-900/80"
+          className="rounded-3xl border border-slate-200/70 bg-[color:var(--surface)] p-10 text-left shadow-xl backdrop-blur dark:border-slate-700/70 dark:bg-[color:var(--surface)]"
         >
           <div className="space-y-4">
             <h2 className="font-display text-3xl font-semibold text-slate-900 dark:text-white sm:text-4xl">
