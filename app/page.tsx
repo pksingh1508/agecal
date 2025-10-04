@@ -10,7 +10,7 @@ export default function Home() {
           <p className="text-sm font-semibold uppercase tracking-widest text-sky-600 dark:text-sky-400">
             Precise Age Insights
           </p>
-          <h1 className="font-poppins text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-bold leading-tight text-slate-900 dark:text-white sm:text-5xl lg:text-6xl">
             Age Calculator
           </h1>
           <p className="mx-auto max-w-2xl text-base text-slate-600 dark:text-slate-300 sm:text-lg">
