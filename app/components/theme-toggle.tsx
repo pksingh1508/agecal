@@ -1,104 +1,112 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "./ui/button";
-
-const transition = {
-  type: "spring",
-  stiffness: 260,
-  damping: 20
-};
+import { motion, AnimatePresence } from "framer-motion";
 
 export function ThemeToggle() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { theme, setTheme, systemTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
+  // Prevent hydration mismatch
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   if (!mounted) {
-    return null;
+    return (
+      <div className="fixed right-4 top-4 z-50 sm:right-6 sm:top-6 lg:right-8 lg:top-8">
+        <div className="h-10 w-10 rounded-full bg-[color:var(--surface)] sm:h-12 sm:w-12" />
+      </div>
+    );
   }
 
-  const currentTheme = resolvedTheme || theme;
+  const currentTheme = theme === "system" ? systemTheme : theme;
   const isDark = currentTheme === "dark";
 
-  const handleToggle = () => {
+  const toggleTheme = () => {
     setTheme(isDark ? "light" : "dark");
   };
 
   return (
-    <div className="fixed right-4 top-4 z-50 sm:right-6 sm:top-6">
-      <Button
-        variant="ghost"
-        size="icon"
-        onClick={handleToggle}
-        aria-label="Toggle theme"
-        className="group relative h-12 w-12 overflow-hidden rounded-full border border-slate-200/60 bg-[color:var(--surface)] shadow-lg backdrop-blur transition-all duration-300 hover:border-sky-400 hover:shadow-2xl dark:border-slate-700/60 dark:hover:border-sky-500"
+    <motion.div
+      className="fixed right-4 top-4 z-50 sm:right-6 sm:top-6 lg:right-8 lg:top-8"
+      initial={{ opacity: 0, scale: 0.8, y: -20 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      transition={{
+        duration: 0.5,
+        ease: [0.22, 1, 0.36, 1],
+        delay: 0.2,
+      }}
+    >
+      <motion.button
+        onClick={toggleTheme}
+        className="group relative flex h-10 w-10 items-center justify-center rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] text-[color:var(--foreground)] shadow-lg backdrop-blur-md transition-all hover:scale-110 hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-[color:var(--ring)] focus:ring-offset-2 focus:ring-offset-[color:var(--background)] sm:h-12 sm:w-12"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+        title={isDark ? "Switch to light mode" : "Switch to dark mode"}
       >
-        <motion.span
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-200/40 via-transparent to-transparent opacity-80 dark:from-sky-500/30"
-          animate={{ rotate: isDark ? 35 : 0, scale: isDark ? 1.08 : 1 }}
-          transition={transition}
+        {/* Background glow effect */}
+        <motion.div
+          className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-indigo-400/20 opacity-0 transition-opacity group-hover:opacity-100 dark:from-sky-400/10 dark:to-indigo-400/10"
+          layoutId="glow"
         />
 
+        {/* Icon container */}
+        <div className="relative h-5 w-5 sm:h-6 sm:w-6">
+          <AnimatePresence mode="wait" initial={false}>
+            {isDark ? (
+              <motion.div
+                key="moon"
+                initial={{ rotate: -90, opacity: 0, scale: 0 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: 90, opacity: 0, scale: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute inset-0"
+              >
+                <Moon className="h-full w-full text-sky-400" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="sun"
+                initial={{ rotate: 90, opacity: 0, scale: 0 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                exit={{ rotate: -90, opacity: 0, scale: 0 }}
+                transition={{
+                  duration: 0.3,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="absolute inset-0"
+              >
+                <Sun className="h-full w-full text-amber-500" />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Ripple effect on click */}
         <motion.span
-          aria-hidden
-          className="absolute inset-0 rounded-full blur-2xl bg-sky-300/30 dark:bg-sky-500/30"
-          animate={{ opacity: isDark ? 0.35 : 0.25, scale: isDark ? 1.1 : 1 }}
+          className="absolute inset-0 rounded-full"
+          initial={false}
+          animate={isDark ? { scale: [1, 1.5], opacity: [0.5, 0] } : {}}
           transition={{ duration: 0.6 }}
         />
+      </motion.button>
 
-        <AnimatePresence initial={false} mode="wait">
-          {isDark ? (
-            <motion.svg
-              key="moon"
-              className="relative h-6 w-6 text-slate-100"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              initial={{ rotate: -45, opacity: 0, scale: 0.6 }}
-              animate={{ rotate: 0, opacity: 1, scale: 1 }}
-              exit={{ rotate: 45, opacity: 0, scale: 0.6 }}
-              transition={transition}
-            >
-              <path
-                d="M21 12.79A9 9 0 0111.21 3 6.5 6.5 0 0012 16.5 6.5 6.5 0 0021 12.79z"
-                stroke="currentColor"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.svg>
-          ) : (
-            <motion.svg
-              key="sun"
-              className="relative h-7 w-7 text-slate-900"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              initial={{ rotate: 45, opacity: 0, scale: 0.6 }}
-              animate={{ rotate: 0, opacity: 1, scale: 1 }}
-              exit={{ rotate: -45, opacity: 0, scale: 0.6 }}
-              transition={transition}
-            >
-              <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth={1.8} />
-              <path
-                d="M12 2v2m0 16v2m10-10h-2M4 12H2m17.07 7.07l-1.42-1.42M6.35 6.35L4.93 4.93m14.14 0l-1.42 1.42M6.35 17.65l-1.42 1.42"
-                stroke="currentColor"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </motion.svg>
-          )}
-        </AnimatePresence>
-        <span className="sr-only">Toggle theme</span>
-      </Button>
-    </div>
+      {/* Tooltip */}
+      <motion.div
+        className="pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-lg border border-[color:var(--border)] bg-[color:var(--surface)] px-3 py-1.5 text-xs font-medium text-[color:var(--foreground)] opacity-0 shadow-lg backdrop-blur-md transition-opacity group-hover:opacity-100 sm:text-sm"
+        initial={{ opacity: 0, x: 10 }}
+        whileHover={{ opacity: 1, x: 0 }}
+      >
+        {isDark ? "Light mode" : "Dark mode"}
+        <div className="absolute right-0 top-1/2 h-2 w-2 -translate-y-1/2 translate-x-1/2 rotate-45 border-b border-r border-[color:var(--border)] bg-[color:var(--surface)]" />
+      </motion.div>
+    </motion.div>
   );
 }

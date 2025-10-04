@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -19,7 +20,10 @@ type AgeResult = {
   days: number;
 };
 
-function calculateExactAge(referenceDate: string, dateOfBirth: string): AgeResult {
+function calculateExactAge(
+  referenceDate: string,
+  dateOfBirth: string
+): AgeResult {
   const current = new Date(referenceDate);
   const birth = new Date(dateOfBirth);
 
@@ -54,9 +58,9 @@ function calculateExactAge(referenceDate: string, dateOfBirth: string): AgeResul
 }
 
 const resultLabels: Record<keyof AgeResult, string> = {
-  years: "Years",
-  months: "Months",
-  days: "Days"
+  years: "YEARS",
+  months: "MONTHS",
+  days: "DAYS"
 };
 
 export function AgeCalculator() {
@@ -79,9 +83,7 @@ export function AgeCalculator() {
       age.months === 0
         ? null
         : `${age.months} ${age.months === 1 ? "month" : "months"}`,
-      age.days === 0
-        ? null
-        : `${age.days} ${age.days === 1 ? "day" : "days"}`
+      age.days === 0 ? null : `${age.days} ${age.days === 1 ? "day" : "days"}`
     ].filter(Boolean);
 
     return parts.length ? parts.join(", ") : "Less than a day old";
@@ -99,7 +101,8 @@ export function AgeCalculator() {
       setAge(result);
       setError(null);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Unable to calculate age";
+      const message =
+        err instanceof Error ? err.message : "Unable to calculate age";
       setError(message);
       setAge(null);
     }
@@ -112,126 +115,172 @@ export function AgeCalculator() {
   };
 
   return (
-    <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-start lg:gap-10">
-      <Card className="backdrop-blur-md supports-[backdrop-filter]:bg-[color:var(--surface)]">
-        <CardHeader className="space-y-3">
-          <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-            Calculate Your Age
-          </CardTitle>
-          <CardDescription className="text-base leading-relaxed text-slate-600 dark:text-slate-400">
-            Enter today&apos;s date or a reference date alongside your date of birth to find your exact age in years, months, and days.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="space-y-2">
-            <Label htmlFor="reference-date" className="text-sm lg:text-base">
-              Today&apos;s Date
-            </Label>
-            <Input
-              id="reference-date"
-              type="date"
-              value={referenceDate}
-              onChange={(event) => setReferenceDate(event.target.value)}
-              aria-describedby="reference-date-help"
-            />
-            <p
-              id="reference-date-help"
-              className="text-sm text-slate-500 dark:text-slate-400"
-            >
-              Select today&apos;s date or any custom reference date.
-            </p>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="date-of-birth" className="text-sm lg:text-base">
-              Date of Birth
-            </Label>
-            <Input
-              id="date-of-birth"
-              type="date"
-              max={referenceDate}
-              value={dateOfBirth}
-              onChange={(event) => setDateOfBirth(event.target.value)}
-              aria-describedby="birth-date-help"
-              required
-            />
-            <p
-              id="birth-date-help"
-              className="text-sm text-slate-500 dark:text-slate-400"
-            >
-              Enter your birth date to generate a precise age calculation.
-            </p>
-          </div>
-
-          {error && (
-            <div
-              role="alert"
-              className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-medium text-red-700 dark:border-red-500/60 dark:bg-red-500/10 dark:text-red-200"
-            >
-              {error}
-            </div>
-          )}
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Button onClick={handleCalculate} disabled={!dateOfBirth} className="w-full sm:w-auto">
-              Calculate Age
-            </Button>
-            <Button
-              type="button"
-              variant="secondary"
-              className="w-full sm:w-auto"
-              onClick={handleReset}
-              disabled={!dateOfBirth && !age}
-            >
-              Reset
-            </Button>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">
-            Your data never leaves this page—calculations happen locally in your browser.
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card
-        aria-live="polite"
-        className={cn(
-          "border-slate-200/70 bg-gradient-to-br from-sky-50 via-cyan-50 to-indigo-100 text-slate-900 shadow-2xl transition-all duration-300 dark:border-slate-700/70 dark:from-[#0b1f3a] dark:via-[#10264c] dark:to-[#0d1b36] md:h-full",
-          age ? "opacity-100" : "opacity-80"
-        )}
+    <div className="grid gap-6 lg:grid-cols-2 lg:gap-8 max-w-6xl mx-auto">
+      {/* Input Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
       >
-        <CardHeader>
-          <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
-            Your Age Breakdown
-          </CardTitle>
-          <CardDescription className="text-base text-slate-600 dark:text-slate-400">
-            {age ? resultSummary : "Results will appear here after you calculate your age."}
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {Object.keys(resultLabels).map((key) => {
-              const label = key as keyof AgeResult;
-              const value = age ? age[label] : "--";
+        <Card className="h-full border-[var(--border)] bg-[var(--card)] shadow-lg">
+          <CardHeader className="space-y-2">
+            <CardTitle className="text-xl font-semibold text-[var(--card-foreground)] sm:text-2xl">
+              Calculate Your Age
+            </CardTitle>
+            <CardDescription className="text-sm leading-relaxed text-[var(--muted-foreground)] sm:text-base">
+              Enter today&apos;s date or a reference date alongside your date of
+              birth to find your exact age in years, months, and days.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-5">
+            {/* Reference Date */}
+            <div className="space-y-2">
+              <Label
+                htmlFor="reference-date"
+                className="text-sm font-medium text-[var(--card-foreground)]"
+              >
+                Today&apos;s Date
+              </Label>
+              <Input
+                id="reference-date"
+                type="date"
+                value={referenceDate}
+                onChange={(e) => setReferenceDate(e.target.value)}
+                className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
+              />
+              <p className="text-xs text-[var(--muted-foreground)]">
+                Select today&apos;s date or any custom reference date.
+              </p>
+            </div>
 
-              return (
-                <div
-                  key={label}
-                  className="flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200/60 bg-[color:var(--surface)]/95 p-6 text-center backdrop-blur dark:border-slate-700/60 dark:bg-[color:var(--surface-muted)]"
-                  role="group"
-                  aria-label={resultLabels[label]}
+            {/* Date of Birth */}
+            <div className="space-y-2">
+              <Label
+                htmlFor="date-of-birth"
+                className="text-sm font-medium text-[var(--card-foreground)]"
+              >
+                Date of Birth
+              </Label>
+              <Input
+                id="date-of-birth"
+                type="date"
+                max={referenceDate}
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+                className="border-[var(--border)] bg-[var(--background)] text-[var(--foreground)]"
+                required
+              />
+              <p className="text-xs text-[var(--muted-foreground)]">
+                Enter your birth date to generate a precise age calculation.
+              </p>
+            </div>
+
+            {/* Error Message */}
+            <AnimatePresence>
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="overflow-hidden rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm font-medium text-red-800 dark:border-red-800 dark:bg-red-950 dark:text-red-200"
                 >
-                  <span className="font-display text-4xl font-semibold text-sky-600 dark:text-sky-400">
-                    {value}
-                  </span>
-                  <span className="mt-2 text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
-                    {resultLabels[label]}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-        </CardContent>
-      </Card>
+                  {error}
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Buttons */}
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button
+                onClick={handleCalculate}
+                disabled={!dateOfBirth}
+                className="w-full bg-[var(--primary)] text-white hover:opacity-90 sm:w-auto"
+              >
+                Calculate Age
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                onClick={handleReset}
+                disabled={!dateOfBirth && !age}
+                className="w-full border-[var(--border)] bg-[var(--muted)] text-[var(--card-foreground)] hover:opacity-90 sm:w-auto"
+              >
+                Reset
+              </Button>
+            </div>
+
+            <p className="text-xs text-[var(--muted-foreground)]">
+              Your data never leaves this page—calculations happen locally in
+              your browser.
+            </p>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Results Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <Card className="h-full border-[var(--border)] shadow-lg bg-[var(--card)]">
+          <CardHeader className="space-y-2">
+            <CardTitle className="text-xl font-semibold text-[var(--card-foreground)] sm:text-2xl">
+              Your Age Breakdown
+            </CardTitle>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={age ? "result" : "empty"}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <CardDescription className="text-sm text-[var(--muted-foreground)] sm:text-base">
+                  {age
+                    ? resultSummary
+                    : "Results will appear here after you calculate your age."}
+                </CardDescription>
+              </motion.div>
+            </AnimatePresence>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-3 gap-3 sm:gap-4">
+              {Object.keys(resultLabels).map((key, index) => {
+                const label = key as keyof AgeResult;
+                const value = age ? age[label] : "--";
+
+                return (
+                  <motion.div
+                    key={label}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 0.2 + index * 0.1,
+                      duration: 0.4
+                    }}
+                    className="flex flex-col items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background)] p-4 text-center backdrop-blur-sm sm:rounded-2xl sm:p-6"
+                  >
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={value}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-3xl font-bold text-[var(--primary)] sm:text-4xl"
+                      >
+                        {value}
+                      </motion.span>
+                    </AnimatePresence>
+                    <span className="mt-2 text-xs font-medium tracking-wide text-[var(--muted-foreground)] sm:text-sm">
+                      {resultLabels[label]}
+                    </span>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }

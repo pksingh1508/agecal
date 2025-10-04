@@ -15,8 +15,7 @@ export function Card({ className, ...props }: CardProps) {
   );
 }
 
-export interface CardHeaderProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function CardHeader({ className, ...props }: CardHeaderProps) {
   return (
@@ -32,10 +31,7 @@ export interface CardTitleProps
 export function CardTitle({ className, ...props }: CardTitleProps) {
   return (
     <h3
-      className={cn(
-        "font-display font-semibold tracking-tight text-slate-900 dark:text-slate-50",
-        className
-      )}
+      className={cn("font-display font-semibold tracking-tight ", className)}
       {...props}
     />
   );
@@ -60,9 +56,10 @@ export function CardContent({ className, ...props }: CardContentProps) {
   return <div className={cn("p-6 pt-0", className)} {...props} />;
 }
 
-export interface CardFooterProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+export interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function CardFooter({ className, ...props }: CardFooterProps) {
-  return <div className={cn("flex items-center p-6 pt-0", className)} {...props} />;
+  return (
+    <div className={cn("flex items-center p-6 pt-0", className)} {...props} />
+  );
 }
