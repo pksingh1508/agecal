@@ -216,7 +216,7 @@ export function AgeCalculator() {
               return (
                 <div
                   key={label}
-                  className="flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200 bg-white/80 p-6 text-center backdrop-blur dark:border-slate-700 dark:bg-slate-950/40"
+                  className="flex h-full flex-col items-center justify-center rounded-2xl border border-slate-200/60 bg-[color:var(--surface)]/95 p-6 text-center backdrop-blur dark:border-slate-700/60 dark:bg-[color:var(--surface-muted)]"
                   role="group"
                   aria-label={resultLabels[label]}
                 >
