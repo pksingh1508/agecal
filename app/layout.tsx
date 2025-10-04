@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter, Poppins } from "next/font/google";
+import { Geist_Mono, Plus_Jakarta_Sans, Sora } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "./components/theme-provider";
 
