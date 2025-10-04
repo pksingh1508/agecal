@@ -8,22 +8,27 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-jakarta);
+  --font-display: var(--font-sora);
   --font-mono: var(--font-geist-mono);
-  --font-inter: var(--font-inter);
-  --font-poppins: var(--font-poppins);
 }
 
 /* Light theme (default) */
 :root {
-  --background: #f8fafc; /* slate-50 */
-  --foreground: #1e293b; /* slate-800 */
+  --background: #f3f6fc;
+  --foreground: #0f172a;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-muted: rgba(226, 232, 240, 0.6);
+  --ring: #0ea5e9;
 }
 
 /* Dark theme */
 .dark {
-  --background: #0f172a; /* slate-900 */
-  --foreground: #ffffff;
+  --background: #050b1f;
+  --foreground: #e2e8f0;
+  --surface: rgba(15, 23, 42, 0.85);
+  --surface-muted: rgba(30, 41, 59, 0.55);
+  --ring: #38bdf8;
 }
 
 html {
@@ -34,8 +39,7 @@ html {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), var(--font-geist-sans), Arial, Helvetica,
-    sans-serif;
+  font-family: var(--font-sans), "Segoe UI", Arial, Helvetica, sans-serif;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -84,4 +88,9 @@ body {
 button:focus-visible {
   outline: 2px solid #2563eb;
   outline-offset: 2px;
+}
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), "Segoe UI", Arial,
+    Helvetica, sans-serif;
 }
