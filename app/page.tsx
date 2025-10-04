@@ -27,7 +27,7 @@ export default function Home() {
           className="rounded-3xl border border-slate-200 bg-white/90 p-10 text-left shadow-xl backdrop-blur dark:border-slate-800 dark:bg-slate-900/80"
         >
           <div className="space-y-4">
-            <h2 className="text-3xl font-semibold text-slate-900 dark:text-white sm:text-4xl">
+            <h2 className="font-display text-3xl font-semibold text-slate-900 dark:text-white sm:text-4xl">
               Accurate Age Calculations for Every Occasion
             </h2>
             <p className="text-base leading-relaxed text-slate-600 dark:text-slate-300">
