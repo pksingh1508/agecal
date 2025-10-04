@@ -83,3 +83,8 @@ button:focus-visible {
   outline: 2px solid #2563eb;
   outline-offset: 2px;
 }
+
+.font-display {
+  font-family: var(--font-display), var(--font-sans), "Segoe UI", Arial,
+    Helvetica, sans-serif;
+}
