@@ -22,6 +22,13 @@
   --ring: #0ea5e9;
 }
 
+/* Fix for date inputs in light mode */
+input[type="date"] {
+  color-scheme: light;
+  background-color: white !important;
+  color: #0f172a !important;
+}
+
 /* Dark theme */
 .dark {
   --background: #050b1f;
