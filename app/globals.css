@@ -15,14 +15,20 @@
 
 /* Light theme (default) */
 :root {
-  --background: #f8fafc; /* slate-50 */
-  --foreground: #1e293b; /* slate-800 */
+  --background: #f3f6fc;
+  --foreground: #0f172a;
+  --surface: rgba(255, 255, 255, 0.9);
+  --surface-muted: rgba(226, 232, 240, 0.6);
+  --ring: #0ea5e9;
 }
 
 /* Dark theme */
 .dark {
-  --background: #0f172a; /* slate-900 */
-  --foreground: #ffffff;
+  --background: #050b1f;
+  --foreground: #e2e8f0;
+  --surface: rgba(15, 23, 42, 0.85);
+  --surface-muted: rgba(30, 41, 59, 0.55);
+  --ring: #38bdf8;
 }
 
 html {
