@@ -220,7 +220,7 @@ export function AgeCalculator() {
                   role="group"
                   aria-label={resultLabels[label]}
                 >
-                  <span className="text-4xl font-semibold text-sky-600 dark:text-sky-400">
+                  <span className="font-display text-4xl font-semibold text-sky-600 dark:text-sky-400">
                     {value}
                   </span>
                   <span className="mt-2 text-sm font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">
