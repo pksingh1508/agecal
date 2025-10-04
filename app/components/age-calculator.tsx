@@ -113,7 +113,7 @@ export function AgeCalculator() {
 
   return (
     <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] md:items-start lg:gap-10">
-      <Card className="border-slate-200/70 bg-white/90 backdrop-blur dark:border-slate-700/70 dark:bg-slate-900/80">
+      <Card className="backdrop-blur-md supports-[backdrop-filter]:bg-[color:var(--surface)]">
         <CardHeader className="space-y-3">
           <CardTitle className="text-2xl font-semibold text-slate-900 dark:text-slate-50">
             Calculate Your Age
