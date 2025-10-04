@@ -195,7 +195,7 @@ export function AgeCalculator() {
       <Card
         aria-live="polite"
         className={cn(
-          "border-slate-200/70 bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50 text-slate-900 shadow-2xl transition-all duration-300 dark:border-slate-700/70 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800",
+          "border-slate-200/70 bg-gradient-to-br from-sky-50 via-cyan-50 to-indigo-100 text-slate-900 shadow-2xl transition-all duration-300 dark:border-slate-700/70 dark:from-[#0b1f3a] dark:via-[#10264c] dark:to-[#0d1b36]",
           age ? "opacity-100" : "opacity-80"
         )}
       >
