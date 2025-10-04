@@ -3,7 +3,7 @@ import { ThemeToggle } from "./components/theme-toggle";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-slate-100/70 dark:bg-slate-950 transition-colors">
+    <div className="relative min-h-screen bg-[color:var(--background)] transition-colors">
       <ThemeToggle />
       <main className="container mx-auto flex max-w-5xl flex-col gap-16 px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
         <header className="space-y-6 text-center">
